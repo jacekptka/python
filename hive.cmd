@@ -19,4 +19,7 @@ LOAD DATA INPATH '/user/jpieczatka/dane/movielens/hive/ratings/ratings.dat' OVER
 LOAD DATA INPATH '/user/jpieczatka/dane/movielens/hive/tags/tags.dat' OVERWRITE INTO TABLE tags;
 
 select avg(ratings.rating) as avgrate, movies.title from ratings, movies where movies.movieid=ratings.movieid group by movies.title having count(ratings.rating) > 100 order by avgrate desc limit 10;
+ 
+select substring(title,-5,4) as year, count(1) as count from movies group by substring(title,-5,4) order by count desc limit 10;
 
+select explode (split(genres,"\\|")) AS genre from movies limit 10;
